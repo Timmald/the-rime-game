@@ -41,7 +41,8 @@ def play_that_funky_music_white_boy(filename):
     return playsound(filename,block=False)
     #threading.Thread(target=playsound, args=(filename,), daemon=True).start()
 
-song_path = os.path.join("beats",random.choice(os.listdir("beats")))
+#song_path = os.path.join("beats",random.choice(os.listdir("beats")))
+song_path = os.path.join("beats","letmeoh_95.mp3")
 print(f"Your beat: {song_path[song_path.index("/"):]}")
 bpm = float(song_path[song_path.index("_")+1:song_path.index(".mp3")])
 if bpm > 135 and not HARD_MODE:
