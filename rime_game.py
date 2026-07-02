@@ -35,6 +35,7 @@ def sample_word(num_syllables):
 
 
 print(f"Fetching {NUM_SYLLABLES} syllable words for the {"first" if FIRST_RHYME else "last"} rhymes")
+print(f"{len(syll_buckets[NUM_SYLLABLES])} possible words")
 rhymes = [sample_word(NUM_SYLLABLES) for i in range(32)]
 
 def play_that_funky_music_white_boy(filename):
@@ -42,7 +43,7 @@ def play_that_funky_music_white_boy(filename):
     #threading.Thread(target=playsound, args=(filename,), daemon=True).start()
 
 #song_path = os.path.join("beats",random.choice(os.listdir("beats")))
-song_path = os.path.join("beats","letmeoh_95.mp3")
+song_path = os.path.join("beats","rapgod_74.mp3") #for tempo consistency tests
 print(f"Your beat: {song_path[song_path.index("/"):]}")
 bpm = float(song_path[song_path.index("_")+1:song_path.index(".mp3")])
 if bpm > 135 and not HARD_MODE:
