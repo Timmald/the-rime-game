@@ -4,7 +4,7 @@ from collections import defaultdict
 import random
 import threading
 import os
-from time import sleep
+from time import sleep,time
 
 
 NUM_SYLLABLES = 2
@@ -35,7 +35,7 @@ def sample_word(num_syllables):
 
 
 print(f"Fetching {NUM_SYLLABLES} syllable words for the {"first" if FIRST_RHYME else "last"} rhymes")
-rhymes = [sample_word(NUM_SYLLABLES) for i in range(1000)]
+rhymes = [sample_word(NUM_SYLLABLES) for i in range(32)]
 
 def play_that_funky_music_white_boy(filename):
     return playsound(filename,block=False)
@@ -56,15 +56,17 @@ window = (["[Get Ready!]","????"]*2 if FIRST_RHYME
           else ["????","[Get Ready!]"]*2)
 try:
     rhyme_idx = 0
-    for i in range(1000 - LOOKAHEAD):
+    for i in range(32 - LOOKAHEAD):
         for beat_count in range(1,5):#1234
+            start = time()
             print("\033c", end="")#clears output
             
             cur_bar = "🔵"*beat_count + "🔴"*(4-beat_count) + f"| {window[0]}"
             other_bars = ["🔴"*(4) + f"| {r}" for r in window[1:]]
             print(cur_bar)
             print("\n".join(other_bars))
-            sleep(time_betwixt_beats)
+            if not beat_count  == 4: #not a bar line
+                sleep(time_betwixt_beats - (time()-start))
         
         old_window = window[1:]
         if old_window[-1] == "????":
@@ -73,6 +75,8 @@ try:
         else:
             new_row = ["????"]
         window = old_window + new_row
+        sleep(time_betwixt_beats - (time() - start)) #if it's a bar line, subtract this computation time too
+    sound.stop()
 
 except Exception as e: #Lurene Grenier crying and screaming rn
     print(e)
